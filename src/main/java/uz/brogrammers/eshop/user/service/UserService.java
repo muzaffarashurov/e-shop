@@ -10,7 +10,4 @@ public class UserService {
 
     private final UserRepo userRepo;
 
-    public void createUser(String name) {
-        userRepo.createUser(name);
-    }
 }

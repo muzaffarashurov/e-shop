@@ -10,8 +10,4 @@ public class RoleService {
 
     private final RoleRepo roleRepo;
 
-    public void createRole(String name) {
-        roleRepo.createRole(name);
-    }
-
 }
