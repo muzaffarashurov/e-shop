@@ -7,4 +7,5 @@ import uz.brogrammers.eshop.user.entity.Role;
 @Repository
 public interface RoleRepo extends JpaRepository<Role, Integer> {
 
+    void createRole(String name);
 }

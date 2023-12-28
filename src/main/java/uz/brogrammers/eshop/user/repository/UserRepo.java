@@ -6,5 +6,6 @@ import uz.brogrammers.eshop.user.entity.User;
 
 @Repository
 public interface UserRepo extends JpaRepository<User, Integer> {
-    
+
+    void createUser(String name);
 }
