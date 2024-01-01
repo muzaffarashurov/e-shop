@@ -1,8 +1,9 @@
 package uz.brogrammers.eshop.user.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.hibernate.annotations.NaturalId;
-
+@Getter
 @Entity
 @Table(name = "role")
 public class Role {

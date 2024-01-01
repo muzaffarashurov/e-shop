@@ -1,4 +1,4 @@
-package uz.brogrammers.eshop.shippingcart.entity;
+package uz.brogrammers.eshop.shoppingcart.entity;
 
 import jakarta.persistence.*;
 
@@ -8,7 +8,7 @@ import java.util.Set;
 @Entity
 @Table(name = "shipping_cart")
 
-public class ShippingCart {
+public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

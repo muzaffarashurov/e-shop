@@ -1,4 +1,4 @@
-package uz.brogrammers.eshop.shippingcart.entity;
+package uz.brogrammers.eshop.shoppingcart.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

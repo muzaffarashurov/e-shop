@@ -1,9 +1,9 @@
-package uz.brogrammers.eshop.shippingcart.service;
+package uz.brogrammers.eshop.shoppingcart.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import uz.brogrammers.eshop.shippingcart.entity.ShoppingCartItem;
-import uz.brogrammers.eshop.shippingcart.repository.ShoppingCartItemRepo;
+import uz.brogrammers.eshop.shoppingcart.entity.ShoppingCartItem;
+import uz.brogrammers.eshop.shoppingcart.repository.ShoppingCartItemRepo;
 
 import java.util.List;
 
