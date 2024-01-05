@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import uz.brogrammers.eshop.shipping.entity.Shipping;
 
 @Repository
-public interface ShippingRepo extends JpaRepository<Shipping, Integer> {
+public interface ShippingRepository extends JpaRepository<Shipping, Integer> {
 
 }

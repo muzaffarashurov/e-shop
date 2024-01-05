@@ -3,18 +3,22 @@ package uz.brogrammers.eshop.category.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.brogrammers.eshop.category.entity.Category;
-import uz.brogrammers.eshop.category.repository.CategoryRepo;
+import uz.brogrammers.eshop.category.repository.CategoryRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class CategoryService {
 
-    private final CategoryRepo categoryRepo;
+    private final CategoryRepository categoryRepository;
 
     public Optional<Category> findById(Integer id) {
-        return categoryRepo.findById(id);
+        return categoryRepository.findById(id);
     }
 
+    public List<Category> findAll() {
+        return categoryRepository.findAll();
+    }
 }

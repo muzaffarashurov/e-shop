@@ -3,7 +3,7 @@ package uz.brogrammers.eshop.shipping.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.brogrammers.eshop.shipping.entity.Shipping;
-import uz.brogrammers.eshop.shipping.repository.ShippingRepo;
+import uz.brogrammers.eshop.shipping.repository.ShippingRepository;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ShippingService {
 
-    private final ShippingRepo shippingRepo;
+    private final ShippingRepository shippingRepository;
 
     public List<Shipping> getAll() {
-        return shippingRepo.findAll();
+        return shippingRepository.findAll();
     }
 
 }

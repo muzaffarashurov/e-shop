@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import uz.brogrammers.eshop.product.entity.Product;
 
 @Repository
-public interface ProductRepo extends JpaRepository<Product, Integer> {
+public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 }

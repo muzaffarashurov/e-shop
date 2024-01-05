@@ -3,7 +3,7 @@ package uz.brogrammers.eshop.shoppingcart.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.brogrammers.eshop.shoppingcart.entity.ShoppingCartItem;
-import uz.brogrammers.eshop.shoppingcart.repository.ShoppingCartItemRepo;
+import uz.brogrammers.eshop.shoppingcart.repository.ShoppingCartItemRepository;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ShoppingCartItemService {
 
-    private final ShoppingCartItemRepo shoppingCartItemRepos;
+    private final ShoppingCartItemRepository shoppingCartItemRepository;
 
     public List<ShoppingCartItem> findAll() {
-        return shoppingCartItemRepos.findAll();
+        return shoppingCartItemRepository.findAll();
     }
 }

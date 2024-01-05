@@ -3,7 +3,7 @@ package uz.brogrammers.eshop.order.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.brogrammers.eshop.order.entity.OrderItem;
-import uz.brogrammers.eshop.order.repository.OrderItemRepo;
+import uz.brogrammers.eshop.order.repository.OrderItemRepository;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderItemService {
 
-    private final OrderItemRepo orderItemRepo;
+    private final OrderItemRepository orderItemRepository;
 
     public List<OrderItem> getOrderItems() {
-        return orderItemRepo.findAll();
+        return orderItemRepository.findAll();
     }
 
 }

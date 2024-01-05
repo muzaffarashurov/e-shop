@@ -8,11 +8,13 @@ import uz.brogrammers.eshop.common.property.FileStorageProperty;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
+
 @Service
 public class FileStorageService {
 
@@ -22,9 +24,9 @@ public class FileStorageService {
     public FileStorageService(FileStorageProperty property) throws FileNotFoundException {
         this.fileStorageLocation = Paths.get(property.getUploadDir()).toAbsolutePath().normalize();
         try {
-            Files.createDirectory(this.fileStorageLocation);
-        } catch (IOException ex) {
-            throw new FileNotFoundException("Could not create directory " + this.fileStorageLocation);
+            Files.createDirectories(this.fileStorageLocation);
+        } catch (Exception ex) {
+            throw new FileNotFoundException("Couldn't create the directory for files");
         }
     }
 
@@ -35,15 +37,27 @@ public class FileStorageService {
 
         try {
             if (fileName.contains("..")) {
-                throw new FileNotFoundException("Sorry! Filename contains invalid path sequence: " + fileName);
+                throw new FileNotFoundException("Sorry! Filename conatins invalid path sequence " + fileName);
             }
+
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
             return fileName;
 
-        }catch (IOException e) {
+        } catch (IOException ex) {
             throw new FileNotFoundException("Couldn't store file " + fileName + ". Please try again!");
+        }
+    }
+
+    public void deleteFile(String fileName) throws FileNotFoundException {
+        try{
+            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Files.deleteIfExists(filePath);
+        }catch (MalformedURLException ex){
+            throw new FileNotFoundException("File not found "+ fileName);
+        }catch (IOException ex){
+            throw new IllegalArgumentException("File couldn't not be deleted "+ fileName);
         }
     }
 
