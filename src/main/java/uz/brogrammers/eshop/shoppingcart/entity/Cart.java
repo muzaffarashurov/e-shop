@@ -15,8 +15,8 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "shopping_cart")
-public class ShoppingCart {
+@Table(name = "cart")
+public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,9 +26,11 @@ public class ShoppingCart {
     private ZonedDateTime created;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "cart_items",
+    @JoinTable(name = "cart_cart_items",
             joinColumns = @JoinColumn(name = "cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private Set<ShoppingCartItem> items = new HashSet<>();
+            inverseJoinColumns = @JoinColumn(name = "cart_item_id"))
+    private Set<CartItem> items = new HashSet<>();
 
+    public void removeiteme() {
+    }
 }

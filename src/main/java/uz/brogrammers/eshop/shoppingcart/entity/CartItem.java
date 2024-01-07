@@ -7,12 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "shipping_cart_item")
+@Table(name = "cart_item")
 @AllArgsConstructor
 @Builder
 @Getter
 @NoArgsConstructor
-public class ShoppingCartItem {
+public class CartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
