@@ -1,5 +1,6 @@
 package uz.brogrammers.eshop.shoppingcart.rest.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +8,9 @@ import org.springframework.web.server.ResponseStatusException;
 import uz.brogrammers.eshop.product.service.ProductService;
 import uz.brogrammers.eshop.shoppingcart.entity.Cart;
 import uz.brogrammers.eshop.shoppingcart.entity.CartItem;
+import uz.brogrammers.eshop.shoppingcart.mapper.CartMapper;
+import uz.brogrammers.eshop.shoppingcart.model.CartModel;
+import uz.brogrammers.eshop.shoppingcart.rest.dto.CartResponse;
 import uz.brogrammers.eshop.shoppingcart.rest.dto.CreateCartItemRequest;
 import uz.brogrammers.eshop.shoppingcart.service.CartItemService;
 import uz.brogrammers.eshop.shoppingcart.service.CartService;
@@ -23,36 +27,45 @@ public class CartController {
     private final ProductService productService;
     private final CartItemService cartItemService;
 
+    @Operation(summary = "Get Cart By ID")
     @GetMapping("/{id}")
-    public Cart getById(@PathVariable Integer id) {
+    public CartResponse getById(@PathVariable Integer id) {
         return cartService.findById(id)
+                .map(CartMapper::mapToDto)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    @Operation(summary = "Get AllCart")
     @GetMapping("/")
-    public List<Cart> getAll() {
-        return cartService.findAll();
+    public List<CartResponse> getAll() {
+        return cartService.findAll().stream()
+                .map(CartMapper::mapToDto)
+                .toList();
     }
 
+    @Operation(summary = "Create new empty Cart")
     @PostMapping("/")
-    public Cart create() {
-
+    public CartResponse create() {
         Cart cart = new Cart();
         cart.setCreated(ZonedDateTime.now());
-
-        return cartService.save(cart);
+        var cartModel = CartMapper.mapToModel(cart);
+        var saved = cartService.create(cartModel);
+        return CartMapper.mapToDto(saved);
     }
 
+    @Operation(summary = "Delete Cart By ID")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         cartService.deleteById(id);
     }
 
-
+    @Operation(summary = "Get ShoppingCart Item By ID")
     @GetMapping("/{cartId}/items/{productId}")
-    public Cart getShoppingCartItem(@PathVariable Integer cartId,
-                                    @RequestBody CreateCartItemRequest request) {
-        Cart cart = cartService.findById(cartId).orElseThrow();
+    public CartResponse getShoppingCartItem(@PathVariable Integer cartId,
+                                            @RequestBody CreateCartItemRequest request) {
+        CartResponse cart = cartService.findById(cartId)
+                .map(CartMapper::mapToDto)
+                .orElseThrow();
 
         productService.findById(request.getProductId()).ifPresent(
                 productModel -> {
@@ -63,16 +76,18 @@ public class CartController {
 
                     var shoppingCartItem = cartItemService.save(item);
                     cart.getItems().add(shoppingCartItem);
-                    cartService.save(cart);
+                    var cartModel = CartMapper.mapToModel(cart);
+                    cartService.save(cartModel);
                 }
         );
 
         return cart;
     }
 
+    @Operation(summary = "Create Cart Item By ID")
     @PostMapping("/{cartId}/items")
-    public Cart createcartItems(@PathVariable Integer cartId, @RequestBody CreateCartItemRequest request) {
-        Cart cart = cartService.findById(cartId).orElseThrow();
+    public CartResponse createCartItems(@PathVariable Integer cartId, @RequestBody CreateCartItemRequest request) {
+        CartModel cart = cartService.findById(cartId).orElseThrow();
 
         productService.findById(request.getProductId()).ifPresent(productModel -> {
             CartItem item = CartItem.builder()
@@ -84,12 +99,13 @@ public class CartController {
             cart.getItems().add(shoppingCartItem);
             cartService.save(cart);
         });
-        return cart;
+        return CartMapper.mapToDto(cart);
     }
 
+    @Operation(summary = "Delete Cart Item")
     @DeleteMapping("/{cartId}/items/{productId}")
-    public Cart deleteCartItem(@PathVariable Integer cartId,
-                               @PathVariable Integer productId) {
+    public CartResponse deleteCartItem(@PathVariable Integer cartId,
+                                       @PathVariable Integer productId) {
         var cart = cartService.findById(cartId).orElseThrow();
         cart.getItems().stream()
                 .filter(item -> item.getProductId() == productId)
@@ -99,18 +115,22 @@ public class CartController {
                     cartService.save(cart);
                 });
 
-        return cart;
+        return CartMapper.mapToDto(cart);
     }
 
+    @Operation(summary = "Clear Shopping Cart")
     @DeleteMapping("/{cartId}/clear")
-    public Cart clearShoppingCart(@PathVariable Integer cartId){
-        Cart cart= cartService.findById(cartId).orElseThrow();
+    public CartResponse clearShoppingCart(@PathVariable Integer cartId) {
+        CartResponse cart = cartService.findById(cartId)
+                .map(CartMapper::mapToDto)
+                .orElseThrow();
 
-        cart.removeiteme();
-        cartService.save(cart);
+        cart.removeitems();
+        var cartModel = CartMapper.mapToModel(cart);
+        cartService.save(cartModel);
 
         cart.getItems()
-                .forEach(item->cartItemService.delete(item));
+                .forEach(item -> cartItemService.delete(item));
 
         return cart;
     }

@@ -1,10 +1,7 @@
 package uz.brogrammers.eshop.shoppingcart.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -15,6 +12,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "cart")
 public class Cart {
 
@@ -31,6 +29,4 @@ public class Cart {
             inverseJoinColumns = @JoinColumn(name = "cart_item_id"))
     private Set<CartItem> items = new HashSet<>();
 
-    public void removeiteme() {
-    }
 }

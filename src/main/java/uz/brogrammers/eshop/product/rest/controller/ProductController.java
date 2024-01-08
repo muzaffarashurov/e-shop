@@ -1,5 +1,6 @@
 package uz.brogrammers.eshop.product.rest.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class ProductController {
 
     private final FileStorageService fileStorageService;
 
+    @Operation(summary = "View all products")
     @GetMapping("/all")
     public List<ProductResponse> getAll() {
         return productService.getAllProducts().stream()
@@ -34,6 +36,7 @@ public class ProductController {
                 .toList();
     }
 
+    @Operation(summary = "Get product by ID")
     @GetMapping("/{id}")
     public ProductResponse getProductById(@PathVariable Integer id) {
         return productService.findById(id)
@@ -42,6 +45,7 @@ public class ProductController {
 
     }
 
+    @Operation(summary = "Add new product")
     @PostMapping("/")
 
     public void addProduct(@RequestParam("file") MultipartFile file, @RequestParam("name") String name,
@@ -61,6 +65,7 @@ public class ProductController {
 
     }
 
+    @Operation(summary = "Update product by ID")
     @PutMapping("/{id}")
     public void updateProduct(@PathVariable("id") Integer id,
                               @RequestParam(value = "file", required = false) MultipartFile file,
