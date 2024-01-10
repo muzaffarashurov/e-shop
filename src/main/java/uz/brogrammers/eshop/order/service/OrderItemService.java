@@ -13,8 +13,8 @@ public class OrderItemService {
 
     private final OrderItemRepository orderItemRepository;
 
-    public List<OrderItem> getOrderItems() {
-        return orderItemRepository.findAll();
+    public OrderItem save(OrderItem item) {
+        return orderItemRepository.save(item);
     }
 
 }

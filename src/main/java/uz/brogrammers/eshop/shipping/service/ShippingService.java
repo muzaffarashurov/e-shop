@@ -17,4 +17,7 @@ public class ShippingService {
         return shippingRepository.findAll();
     }
 
+    public Shipping save(Shipping shipping) {
+       return shippingRepository.save(shipping);
+    }
 }

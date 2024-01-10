@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import uz.brogrammers.eshop.user.entity.User;
 
 @Repository
-public interface UserRepo extends JpaRepository<User, Integer> {
+public interface UserReposirory extends JpaRepository<User, Integer> {
 
 }

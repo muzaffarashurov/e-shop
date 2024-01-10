@@ -1,5 +1,6 @@
 package uz.brogrammers.eshop.category.rest;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
+    @Operation(summary = "Get all categories")
     @GetMapping("/")
     public List<Category> getAll() {
         return categoryService.findAll();

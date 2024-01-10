@@ -1,15 +1,21 @@
 package uz.brogrammers.eshop.order.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order {
 
     @Id
@@ -24,9 +30,9 @@ public class Order {
     private Integer userId;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "order_items",
+    @JoinTable(name = "orders_order_items",
             joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id"))
+            inverseJoinColumns = @JoinColumn(name = "order_item_id"))
     private Set<OrderItem> items = new HashSet<>();
 
     @Column(name = "shipping_id")

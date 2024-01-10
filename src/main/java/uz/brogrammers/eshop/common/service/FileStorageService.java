@@ -37,7 +37,7 @@ public class FileStorageService {
 
         try {
             if (fileName.contains("..")) {
-                throw new FileNotFoundException("Sorry! Filename conatins invalid path sequence " + fileName);
+                throw new FileNotFoundException("Sorry! Filename contains invalid path sequence " + fileName);
             }
 
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
@@ -51,13 +51,13 @@ public class FileStorageService {
     }
 
     public void deleteFile(String fileName) throws FileNotFoundException {
-        try{
+        try {
             Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
             Files.deleteIfExists(filePath);
-        }catch (MalformedURLException ex){
-            throw new FileNotFoundException("File not found "+ fileName);
-        }catch (IOException ex){
-            throw new IllegalArgumentException("File couldn't not be deleted "+ fileName);
+        } catch (MalformedURLException ex) {
+            throw new FileNotFoundException("File not found " + fileName);
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("File couldn't not be deleted " + fileName);
         }
     }
 
