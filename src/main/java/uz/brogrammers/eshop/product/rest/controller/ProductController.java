@@ -1,6 +1,7 @@
 package uz.brogrammers.eshop.product.rest.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ import uz.brogrammers.eshop.product.service.ProductService;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
-
+@Tag(name = "Product")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/product")
@@ -25,7 +26,6 @@ public class ProductController {
 
     private final ProductService productService;
     private final CategoryService categoryService;
-
     private final FileStorageService fileStorageService;
 
     @Operation(summary = "View all products")
@@ -48,7 +48,7 @@ public class ProductController {
     @Operation(summary = "Add new product")
     @PostMapping("/")
 
-    public void addProduct(@RequestParam("file") MultipartFile file, @RequestParam("name") String name,
+    public void addProduct(@RequestParam("file") MultipartFile file, @RequestParam("title") String title,
                            @RequestParam BigDecimal price, @RequestParam Integer categoryId) throws FileNotFoundException {
 
         Category category = categoryService.findById(categoryId).orElseThrow(() -> new IllegalArgumentException("Invalid category is selected"));
@@ -56,7 +56,7 @@ public class ProductController {
 
         var productModel = ProductModel.builder()
                 .categoryId(categoryId)
-                .name(name)
+                .title(title)
                 .price(price)
                 .imageUrl(imageUrl)
                 .build();
@@ -69,7 +69,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public void updateProduct(@PathVariable("id") Integer id,
                               @RequestParam(value = "file", required = false) MultipartFile file,
-                              @RequestParam("name") String name,
+                              @RequestParam("name") String title,
                               @RequestParam("price") BigDecimal price,
                               @RequestParam("categoryId") Integer categoryId)
             throws FileNotFoundException {
@@ -88,7 +88,7 @@ public class ProductController {
 
         var productModel = ProductModel.builder()
                 .id(id)
-                .name(name)
+                .title(title)
                 .price(price)
                 .categoryId(categoryId)
                 .imageUrl(file != null ? "http://localhost:8081/api/files/download/" + fileName : oldProduct.getImageUrl())

@@ -1,10 +1,12 @@
 package uz.brogrammers.eshop.shoppingcart.rest.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import uz.brogrammers.eshop.order.mapper.OrderMapper;
 import uz.brogrammers.eshop.product.service.ProductService;
 import uz.brogrammers.eshop.shoppingcart.entity.Cart;
 import uz.brogrammers.eshop.shoppingcart.entity.CartItem;
@@ -17,7 +19,7 @@ import uz.brogrammers.eshop.shoppingcart.service.CartService;
 
 import java.time.ZonedDateTime;
 import java.util.List;
-
+@Tag(name = "Cart")
 @RestController
 @RequestMapping("/api/shopping-cart")
 @RequiredArgsConstructor
@@ -80,7 +82,6 @@ public class CartController {
                     cartService.save(cartModel);
                 }
         );
-
         return cart;
     }
 

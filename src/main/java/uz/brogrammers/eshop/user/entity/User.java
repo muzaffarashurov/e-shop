@@ -1,6 +1,10 @@
 package uz.brogrammers.eshop.user.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 import java.time.ZonedDateTime;
@@ -9,6 +13,10 @@ import java.util.Set;
 
 @Table(name = "user")
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -21,7 +29,7 @@ public class User {
     @Column(name = "surname", nullable = false)
     private String surname;
     @NaturalId
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
     @Column(name = "password", nullable = false)
     private String password;

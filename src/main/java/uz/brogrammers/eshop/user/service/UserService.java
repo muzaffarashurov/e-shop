@@ -16,4 +16,12 @@ public class UserService {
     public Optional<User> findById(Integer id) {
         return userReposirory.findById(id);
     }
+
+    public Optional<User> findByEmail(String email) {
+        return userReposirory.findByEmail(email);
+    }
+
+    public User save(User user) {
+        return userReposirory.save(user);
+    }
 }
