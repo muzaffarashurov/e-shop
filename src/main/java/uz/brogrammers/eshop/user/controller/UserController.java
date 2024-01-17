@@ -1,6 +1,5 @@
 package uz.brogrammers.eshop.user.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +18,8 @@ public class UserController {
 
         UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getFirstName(),
                 currentUser.getLastName(), currentUser.getAuthorities());
+        System.out.println(userSummary);
         return userSummary;
     }
 
-}
 }
